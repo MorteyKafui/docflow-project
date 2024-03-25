@@ -1,3 +1,4 @@
+import SubmitButton from "@/components/SubmitButton";
 import TagInputField from "@/components/TagInputField";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -197,12 +198,13 @@ const AddProject = async () => {
             </Label>
             <Input id="year" name="year" type="text" placeholder="Year" />
           </div>
-          <Button
+          <SubmitButton />
+          {/* <Button
             className="w-full col-start-1 col-end-3 font-bold text-xl hover:opacity-90 transition-all duration-500"
             size="lg"
           >
             Submit
-          </Button>
+          </Button> */}
         </form>
       </div>
     </section>

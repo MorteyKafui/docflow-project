@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import prisma from "@/utils/db";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import SubmitButton from "@/components/SubmitButton";
 
 const getData = async ({
   userId,
@@ -230,12 +231,13 @@ const EditProjectPage = async ({ params }: { params: { id: string } }) => {
               placeholder="Year"
             />
           </div>
-          <Button
+          <SubmitButton />
+          {/* <Button
             className="w-full col-start-1 col-end-3 font-bold text-xl hover:opacity-90 transition-all duration-500"
             size="lg"
           >
             Save
-          </Button>
+          </Button> */}
         </form>
       </div>
     </section>

@@ -37,24 +37,24 @@ const Navbar = async () => {
                 href="/all-projects"
                 className="hover:text-rose-700 transition-all duration-500"
               >
-                Projects
+                All Projects
               </Link>
             </li>
 
-            {/* <li>
-            <Link
-              href="/about"
-              className="hover:text-rose-700 transition-all duration-500"
-            >
-              About
-            </Link>
-          </li> */}
             <li>
               <Link
                 href="/add"
                 className="hover:text-rose-700 transition-all duration-500"
               >
                 Add New Project
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/dashboard"
+                className="hover:text-rose-700 transition-all duration-500 ml-20 border-2 p-2 border-rose-500 rounded"
+              >
+                Go to Dashboard
               </Link>
             </li>
           </ul>
