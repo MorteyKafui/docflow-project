@@ -29,10 +29,10 @@ const AddProject = () => {
             <Input id="bookTitle" type="text" placeholder="Book Title" />
           </div>
           <div className="flex flex-col gap-4">
-            <Label className="text-xl" htmlFor="year">
-              Year
+            <Label className="text-xl" htmlFor="courseCode">
+              Course Code
             </Label>
-            <Input id="year" type="date" placeholder="Year" />
+            <Input id="courseCode" type="text" placeholder="Course Code" />
           </div>
           <div className="flex flex-col gap-4">
             <Label className="text-xl" htmlFor="members">
@@ -73,6 +73,12 @@ const AddProject = () => {
               Source Code
             </Label>
             <Input id="code" type="url" placeholder="Source Code" />
+          </div>
+          <div className="flex flex-col gap-4">
+            <Label className="text-xl" htmlFor="year">
+              Year
+            </Label>
+            <Input id="year" type="date" placeholder="Year" />
           </div>
           <Button
             className="w-full col-start-1 col-end-3 font-bold text-xl hover:opacity-90 transition-all duration-500"
