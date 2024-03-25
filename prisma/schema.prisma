@@ -15,7 +15,27 @@ datasource db {
 }
 
 model User {
-  id    String  @id @unique
-  email String  @unique
-  name  String?
+  id      String    @id @unique
+  email   String    @unique
+  name    String?
+  Project Project[]
+}
+
+model Project {
+  id            String   @id @default(uuid())
+  title         String
+  course        String
+  bookTitle     String
+  courseCode    String
+  members       String
+  supervisor    String
+  bookCover     String
+  documentation String
+  projectUrl    String?
+  sourceCode    String
+  year          String
+  User          User?    @relation(fields: [userId], references: [id])
+  userId        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }

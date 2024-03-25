@@ -1,26 +1,54 @@
 import { Button } from "@/components/ui/button";
+import prisma from "@/utils/db";
 import { Check, Edit, List, Trash } from "lucide-react";
+import { revalidatePath } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
-const project = {
-  id: "1",
-  title: "Automated Inventory Management System",
-  course: "Software Engineering",
-  bookTitle: "Software Engineering: A Practitioner's Approach",
-  courseCode: "CS-402",
-  year: 2023,
-  projectMembers: ["John Doe", "Jane Smith", "Alice Johnson"],
-  supervisor: "Dr. Michael Brown",
-  bookCoverImage:
-    "https://images-na.ssl-images-amazon.com/images/I/51PvOq2UtSL._SX387_BO1,204,203,200_.jpg",
-  documentation:
-    "Automated Inventory Management System is a comprehensive course designed to teach participants how to effectively manage inventory using automation tools and techniques. The course covers fundamental inventory management principles and practices, as well as advanced automation strategies to streamline inventory processes and reduce costs.",
-  url: "https://example.com/project",
-  sourceCode: "https://github.com/example/project",
+const getSingleProject = async (projectId: string) => {
+  const data = await prisma.project.findUnique({
+    where: {
+      id: projectId,
+    },
+    select: {
+      id: true,
+      title: true,
+      bookCover: true,
+      bookTitle: true,
+      course: true,
+      courseCode: true,
+      documentation: true,
+      members: true,
+      projectUrl: true,
+      sourceCode: true,
+      supervisor: true,
+      year: true,
+    },
+  });
+
+  return data;
 };
 
-const ProjectPage = (params: { id: string }) => {
+const ProjectPage = async ({ params }: { params: { id: string } }) => {
+  const project = await getSingleProject(params.id);
+
+  const deleteProject = async (formData: FormData) => {
+    "use server";
+
+    const projectId = formData.get("projectId") as string;
+
+    await prisma.project.delete({
+      where: {
+        id: projectId,
+      },
+    });
+
+    redirect("/all-projects");
+
+    return revalidatePath("/all-projects");
+  };
+
   return (
     <section className="my-20">
       <div className="max-w-7xl container mx-auto px-10 py-8">
@@ -33,26 +61,30 @@ const ProjectPage = (params: { id: string }) => {
             className="rounded shadow-xl"
           />
           <div>
-            <h2 className="text-2xl font-semibold">{project.title}</h2>
+            <h2 className="text-2xl font-semibold">{project?.title}</h2>
             <div className="text-sm font-medium italic text-zinc-500 mt-5 mb-16">
-              <p>{project.course}</p>
-              <p>{project.year}</p>
+              <p>{project?.course}</p>
+              <p>{project?.year}</p>
             </div>
             <div className="flex gap-10 items-center">
               <Button className="shadow-2xl " variant="ghost" size="lg" asChild>
                 <Link
                   className="border-2 text-rose-500 border-rose-400 flex gap-2 hover:opacity-85 transition-all duration-500 "
-                  href={`/edit/${project.id}`}
+                  href={`/all-projects/edit/${project?.id}`}
                 >
                   <Edit /> <span>Edit</span>
                 </Link>
               </Button>
-              <Button
-                className="flex gap-2 shadow-2xl hover:bg-white hover:text-rose-500 hover:opacity-85 transition-all duration-500 hover:border-2 hover:border-rose-500"
-                size="lg"
-              >
-                <Trash /> <span>Delete</span>
-              </Button>
+              <form action={deleteProject}>
+                <input type="hidden" name="projectId" value={project?.id} />
+                <Button
+                  type="submit"
+                  className="flex gap-2 shadow-2xl hover:bg-white hover:text-rose-500 hover:opacity-85 transition-all duration-500 hover:border-2 hover:border-rose-500"
+                  size="lg"
+                >
+                  <Trash /> <span>Delete</span>
+                </Button>
+              </form>
             </div>
           </div>
         </header>
@@ -61,8 +93,8 @@ const ProjectPage = (params: { id: string }) => {
             <h2 className="text-3xl my-8 text-rose-500 font-bold">
               Documentation
             </h2>
-            <p className="w-4/5">{project.documentation}</p>
-            <ul className="my-8">
+            <p className="w-4/5">{project?.documentation}</p>
+            {/* <ul className="my-8">
               <h3 className="mb-4 font-semibold">Course Objectives</h3>
               <li className="flex gap-2 items-center">
                 <Check />
@@ -112,7 +144,7 @@ const ProjectPage = (params: { id: string }) => {
                   carrying costs.
                 </span>
               </li>
-            </ul>
+            </ul> */}
           </div>
           <div>
             <h2 className="text-3xl my-8 text-rose-500 font-bold">
@@ -121,47 +153,54 @@ const ProjectPage = (params: { id: string }) => {
             <div>
               <div className="flex flex-col gap-4">
                 <p>
-                  <span className="text-rose-500 font-medium">Book Title:</span>{" "}
+                  <span className="text-rose-500 font-medium">Book Title:</span>
                   <span className="italic dark:text-gray-300">
-                    {project.bookTitle}
+                    {project?.bookTitle}
                   </span>
                 </p>
                 <p>
                   <span className="text-rose-500 font-medium">
                     Course Code:
-                  </span>{" "}
+                  </span>
                   <span className="italic dark:text-gray-300">
-                    {project.courseCode}
+                    {project?.courseCode}
                   </span>
                 </p>
                 <p>
-                  <span className="text-rose-500 font-medium">Supervisor:</span>{" "}
+                  <span className="text-rose-500 font-medium">Supervisor:</span>
                   <span className="italic dark:text-gray-300">
-                    {project.supervisor}
+                    {project?.supervisor}
                   </span>
                 </p>
                 <p>
                   <span className="text-rose-500 font-medium">
                     Project Url:
                   </span>{" "}
-                  <span className="italic dark:text-gray-300">
-                    {project.url ?? "No url"}
-                  </span>{" "}
+                  <Link href={`${project?.projectUrl}`} target="_blank">
+                    <span className="italic dark:text-gray-300">
+                      {project?.projectUrl ?? "No url"}
+                    </span>
+                  </Link>
                 </p>
                 <p>
                   <span className="text-rose-500 font-medium">
                     Source Code:
                   </span>{" "}
-                  <span className="italic dark:text-gray-300">
-                    {project.sourceCode}
-                  </span>{" "}
+                  <Link target="_blank" href={`${project?.sourceCode}`}>
+                    <span className="italic dark:text-gray-300">
+                      {project?.sourceCode}
+                    </span>
+                  </Link>
                 </p>
                 <p className="text-rose-500 font-medium">Project Members: </p>
                 <ul>
-                  {project.projectMembers.map(el => (
+                  {/* {project?.projectMembers.map(el => (
                     <li className="italic dark:text-gray-300" key={el}>
                       {el}
                     </li>
+                  ))} */}
+                  {project?.members.split(",").map(el => (
+                    <li key={el}>{el}</li>
                   ))}
                 </ul>
               </div>

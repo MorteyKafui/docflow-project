@@ -1,50 +1,57 @@
-import TagInputField from "@/components/TagInputField";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import prisma from "@/utils/db";
-import supabase from "@/utils/supabse";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { Label } from "@/components/ui/label";
+import prisma from "@/utils/db";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
-export const uploadFile = async (file: File): Promise<string> => {
-  // const imagePath = `https://qdoxynjkmbgpgncnmadr.supabase.co/storage/v1/object/public/DocFlowImages/${file}`;
+const getData = async ({
+  userId,
+  projectId,
+}: {
+  userId: string;
+  projectId: string;
+}) => {
+  const data = await prisma.project.findUnique({
+    where: {
+      id: projectId,
+      userId,
+    },
+    select: {
+      id: true,
+      title: true,
+      bookCover: true,
+      bookTitle: true,
+      course: true,
+      courseCode: true,
+      documentation: true,
+      members: true,
+      projectUrl: true,
+      sourceCode: true,
+      supervisor: true,
+      year: true,
+    },
+  });
 
-  // Upload file to Supabase Storage
-  // const { data, error } = await supabase.storage
-  //   .from("DocFlowImages") // Replace 'your_bucket_name' with your actual bucket name
-  //   .upload(`images/${file.name}`, file);
-  const { data, error } = await supabase.storage
-    .from("DocFlowImages") // Replace 'your_bucket_name' with your actual bucket name
-    .upload(
-      `https://qdoxynjkmbgpgncnmadr.supabase.co/storage/v1/object/public/DocFlowImages/${file.name}`,
-      file
-    );
-
-  // if (error) {
-  //   throw new Error(error.message);
-  // }
-
-  // Return the URL of the uploaded file
-  return data?.path || "";
+  return data;
 };
 
-const AddProject = async () => {
+const EditProjectPage = async ({ params }: { params: { id: string } }) => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-
-  if (!user) {
-    throw new Error("Not authorized!");
-  }
+  const project = await getData({
+    userId: user?.id as string,
+    projectId: params.id,
+  });
 
   const postData = async (formData: FormData) => {
     "use server";
 
-    const bookCoverFile = formData.get("bookCover") as File;
-    const bookCover = await uploadFile(bookCoverFile);
-    console.log(`cover: ${bookCover}`);
-    console.log(`file: ${bookCoverFile}`);
+    if (!user) {
+      throw new Error("Not authorized");
+    }
 
     const title = formData.get("title") as string;
     const course = formData.get("course") as string;
@@ -57,31 +64,36 @@ const AddProject = async () => {
     const sourceCode = formData.get("sourceCode") as string;
     const year = formData.get("year") as string;
 
-    await prisma.project.create({
+    await prisma.project.update({
+      where: {
+        id: project?.id,
+        userId: user.id,
+      },
       data: {
-        userId: user?.id as string,
         title,
-        course,
+        // bookCover,
         bookTitle,
+        course,
         courseCode,
-        members,
-        supervisor,
-        bookCover,
         documentation,
+        members,
         projectUrl,
         sourceCode,
+        supervisor,
         year,
       },
     });
 
-    return redirect("/all-projects");
+    revalidatePath(`/all-projects/${project?.id}`);
+
+    return redirect(`/all-projects/${project?.id}`);
   };
 
   return (
     <section className="mb-20">
       <div className="max-w-6xl container mx-auto px-10 py-8">
         <h2 className="my-10 text-center text-4xl text-rose-700 font-bold">
-          Create a Project
+          Edit Project
         </h2>
         <form
           action={postData}
@@ -96,19 +108,27 @@ const AddProject = async () => {
               id="title"
               type="text"
               placeholder="Project Title"
+              defaultValue={project?.title}
             />
           </div>
           <div className="flex flex-col gap-4">
             <Label className="text-xl" htmlFor="course">
               Course
             </Label>
-            <Input name="course" id="course" type="text" placeholder="Course" />
+            <Input
+              defaultValue={project?.course}
+              name="course"
+              id="course"
+              type="text"
+              placeholder="Course"
+            />
           </div>
           <div className="flex flex-col gap-4">
             <Label className="text-xl" htmlFor="bookTitle">
               Book Title
             </Label>
             <Input
+              defaultValue={project?.bookTitle}
               name="bookTitle"
               id="bookTitle"
               type="text"
@@ -120,6 +140,7 @@ const AddProject = async () => {
               Course Code
             </Label>
             <Input
+              defaultValue={project?.courseCode}
               name="courseCode"
               id="courseCode"
               type="text"
@@ -131,22 +152,19 @@ const AddProject = async () => {
               Names of Project Members
             </Label>
             <Textarea
+              defaultValue={project?.members}
               name="members"
               id="members"
               placeholder="Project members names separated by comma(,)"
             />
           </div>
-          {/* <div className="flex flex-col gap-4">
-            <Label className="text-xl" htmlFor="members">
-              Names of Project Members
-            </Label>
-            <TagInputField />
-          </div> */}
+
           <div className="flex flex-col gap-4">
             <Label className="text-xl" htmlFor="supervisor">
               Name of Supervisor
             </Label>
             <Input
+              defaultValue={project?.supervisor}
               id="supervisor"
               name="supervisor"
               type="text"
@@ -158,6 +176,7 @@ const AddProject = async () => {
               Book Cover
             </Label>
             <Input
+              defaultValue={project?.bookCover}
               id="bookCover"
               name="bookCover"
               type="file"
@@ -169,6 +188,7 @@ const AddProject = async () => {
               Documentation
             </Label>
             <Textarea
+              defaultValue={project?.documentation}
               name="documentation"
               id="documentation"
               placeholder="Type your documentation"
@@ -178,13 +198,20 @@ const AddProject = async () => {
             <Label className="text-xl" htmlFor="url">
               Project URL(Optional)
             </Label>
-            <Input id="url" name="url" type="url" placeholder="Project URL" />
+            <Input
+              defaultValue={project?.projectUrl as string}
+              id="url"
+              name="url"
+              type="url"
+              placeholder="Project URL"
+            />
           </div>
           <div className="flex flex-col gap-4">
             <Label className="text-xl" htmlFor="sourceCode">
               Source Code URL
             </Label>
             <Input
+              defaultValue={project?.sourceCode}
               id="code"
               name="sourceCode"
               type="url"
@@ -195,13 +222,19 @@ const AddProject = async () => {
             <Label className="text-xl" htmlFor="year">
               Year
             </Label>
-            <Input id="year" name="year" type="text" placeholder="Year" />
+            <Input
+              defaultValue={project?.year}
+              id="year"
+              name="year"
+              type="text"
+              placeholder="Year"
+            />
           </div>
           <Button
             className="w-full col-start-1 col-end-3 font-bold text-xl hover:opacity-90 transition-all duration-500"
             size="lg"
           >
-            Submit
+            Save
           </Button>
         </form>
       </div>
@@ -209,4 +242,4 @@ const AddProject = async () => {
   );
 };
 
-export default AddProject;
+export default EditProjectPage;
