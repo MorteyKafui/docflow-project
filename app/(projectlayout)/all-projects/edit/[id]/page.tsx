@@ -85,9 +85,9 @@ const EditProjectPage = async ({ params }: { params: { id: string } }) => {
       },
     });
 
-    revalidatePath(`/all-projects/${project?.id}`);
+    revalidatePath(`/dashboard`);
 
-    return redirect(`/all-projects/${project?.id}`);
+    return redirect(`/dashboard`);
   };
 
   return (
