@@ -11,10 +11,6 @@ const AddProject = async () => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  if (!user) {
-    throw new Error("Not authorized!");
-  }
-
   const postData = async (formData: FormData) => {
     "use server";
 
