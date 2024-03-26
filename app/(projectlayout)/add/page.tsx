@@ -117,8 +117,11 @@ const AddProject = async () => {
             />
           </div>
           <div className="flex flex-col gap-4">
-            <Label className="text-xl" htmlFor="members">
+            <Label className="text-xl flex items-center" htmlFor="members">
               Names of Project Members
+              <span className="text-sm ml-10 text-rose-500">
+                (separate names by commas)
+              </span>
             </Label>
             <Textarea
               name="members"
@@ -142,9 +145,6 @@ const AddProject = async () => {
           <div className="flex flex-col gap-4">
             <Label className="text-xl flex items-center" htmlFor="image">
               Book Cover
-              <span className="text-sm ml-10 text-rose-500">
-                (accepted image format: png)
-              </span>
             </Label>
             <Input
               id="image"

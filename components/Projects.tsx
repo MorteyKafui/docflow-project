@@ -1,9 +1,9 @@
-import Image from "next/image";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import Link from "next/link";
 import prisma from "@/utils/db";
+import { revalidatePath } from "next/cache";
+import Link from "next/link";
+import { Button } from "./ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Input } from "./ui/input";
 
 // const projects = [
 //   {
@@ -166,6 +166,8 @@ const getProjects = async () => {
     },
   });
 
+  revalidatePath("/all-projects");
+
   return data;
 };
 
@@ -188,27 +190,10 @@ const AllProjects = async () => {
               <p>No projects found</p>
             </>
           ) : (
-            projects.map(({ id, title, year, course, bookCover }) => (
+            projects.map(({ id, title, year, course }) => (
               <Card className="mb-8" key={id}>
                 <Link href={`/all-projects/${id}`}>
-                  <div className="flex items-center">
-                    {bookCover ? (
-                      <Image
-                        className="rounded object-cover h-full shadow-xl"
-                        src={`https://qdoxynjkmbgpgncnmadr.supabase.co/storage/v1/object/public/images/${bookCover}`}
-                        width={130}
-                        height={130}
-                        alt="book cover"
-                      />
-                    ) : (
-                      <Image
-                        className="rounded object-cover h-full shadow-xl"
-                        src="/book-cover-default.jpg"
-                        width={130}
-                        height={130}
-                        alt="book cover"
-                      />
-                    )}
+                  <div className="flex justify-between items-center">
                     <CardHeader className="text-xl flex flex-col gap-4">
                       <div className="flex flex-col gap-2">
                         <CardTitle className="font-bold mb-2">
@@ -241,29 +226,12 @@ const AllProjects = async () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col p-4">
-              {projects.slice(0, 3).map(({ id, title, course, bookCover }) => (
+              {projects.slice(0, 3).map(({ id, title, course, year }) => (
                 <div className="flex gap-5 mb-8" key={id}>
-                  {bookCover ? (
-                    <Image
-                      className="rounded object-cover h-full shadow-xl"
-                      src={`https://qdoxynjkmbgpgncnmadr.supabase.co/storage/v1/object/public/images/${bookCover}`}
-                      width={50}
-                      height={50}
-                      alt="book cover"
-                    />
-                  ) : (
-                    <Image
-                      className="rounded object-cover h-full shadow-xl"
-                      src="/book-cover-default.jpg"
-                      width={50}
-                      height={50}
-                      alt="book cover"
-                    />
-                  )}
                   <div>
                     <h3 className="font-bold">{title}</h3>
                     <p className="text-sm italic text-zinc-400 font-medium mt-2">
-                      {course}
+                      {course} &mdash; <span>{year}</span>
                     </p>
                   </div>
                 </div>

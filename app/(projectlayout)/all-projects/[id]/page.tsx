@@ -1,9 +1,6 @@
-import { Button } from "@/components/ui/button";
 import prisma from "@/utils/db";
-import { Edit, Trash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
 const getSingleProject = async (projectId: string) => {
   const data = await prisma.project.findUnique({
@@ -36,13 +33,23 @@ const ProjectPage = async ({ params }: { params: { id: string } }) => {
     <section className="my-20">
       <div className="max-w-7xl container mx-auto px-10 py-8">
         <header className="flex gap-8">
-          <Image
-            src="/book-cover-default.jpg"
-            alt="book cover"
-            width={150}
-            height={150}
-            className="rounded shadow-xl"
-          />
+          {project?.bookCover ? (
+            <Image
+              className="rounded object-cover h-full shadow-xl"
+              src={`https://qdoxynjkmbgpgncnmadr.supabase.co/storage/v1/object/public/images/${project.bookCover}`}
+              width={200}
+              height={200}
+              alt="book cover"
+            />
+          ) : (
+            <Image
+              className="rounded object-cover h-full shadow-xl"
+              src="/book-cover-default.jpg"
+              width={200}
+              height={200}
+              alt="book cover"
+            />
+          )}
           <div>
             <h2 className="text-2xl font-semibold">{project?.title}</h2>
             <div className="text-sm font-medium italic text-zinc-500 mt-5 mb-16">
@@ -65,7 +72,7 @@ const ProjectPage = async ({ params }: { params: { id: string } }) => {
             <div>
               <div className="flex flex-col gap-4">
                 <p>
-                  <span className="text-rose-500 font-medium">Book Title:</span>
+                  <span className="text-rose-500 font-medium">Book Title:</span>{" "}
                   <span className="italic dark:text-gray-300">
                     {project?.bookTitle}
                   </span>
@@ -73,13 +80,13 @@ const ProjectPage = async ({ params }: { params: { id: string } }) => {
                 <p>
                   <span className="text-rose-500 font-medium">
                     Course Code:
-                  </span>
+                  </span>{" "}
                   <span className="italic dark:text-gray-300">
                     {project?.courseCode}
                   </span>
                 </p>
                 <p>
-                  <span className="text-rose-500 font-medium">Supervisor:</span>
+                  <span className="text-rose-500 font-medium">Supervisor:</span>{" "}
                   <span className="italic dark:text-gray-300">
                     {project?.supervisor}
                   </span>

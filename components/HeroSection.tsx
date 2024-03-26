@@ -1,9 +1,45 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 
 const HeroSection = () => {
+  const heroContainer = useRef(null);
+
+  useGSAP(
+    () => {
+      const tl = gsap.timeline({
+        defaults: {
+          opacity: 0,
+          duration: 1,
+          stagger: 0.2,
+          ease: "circ.inOut",
+          yoyo: true,
+        },
+      });
+
+      tl.from(".hero h1", {
+        y: 100,
+        scale: 1.2,
+      })
+        .from(".hero p", {
+          y: 120,
+        })
+        .from(".hero .btns", {
+          y: 150,
+          ease: "circ",
+        });
+    },
+    { scope: heroContainer }
+  );
+
   return (
-    <header className="h-screen">
+    <header className="hero h-screen" ref={heroContainer}>
       <div className="flex flex-col justify-center items-center h-full gap-8 text-center">
         <h1 className="text-6xl font-poppins">
           <span className="text-rose-500">Effortless</span> Document{" "}
@@ -18,7 +54,7 @@ const HeroSection = () => {
             efficient and effective.
           </span>
         </p>
-        <div className="flex gap-10 items-center">
+        <div className="btns flex gap-10 items-center">
           <Button className="text-xl font-bold" size="lg" asChild>
             <Link href="/add">Get Started</Link>
           </Button>
