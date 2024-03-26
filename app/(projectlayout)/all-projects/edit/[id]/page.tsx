@@ -176,7 +176,6 @@ const EditProjectPage = async ({ params }: { params: { id: string } }) => {
               Book Cover
             </Label>
             <Input
-              defaultValue={project?.bookCover}
               id="bookCover"
               name="bookCover"
               type="file"
