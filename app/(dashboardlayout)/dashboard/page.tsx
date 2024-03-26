@@ -80,17 +80,27 @@ const DashboardPage = async () => {
         </div>
       ) : (
         <div>
-          {data.map(({ title, course, id, year }) => (
+          {data.map(({ title, course, id, year, bookCover }) => (
             <Card className="mb-8" key={id}>
               <div className="flex items-center">
                 <Link href={`/all-projects/${id}`}>
-                  <Image
-                    className="rounded shadow-xl"
-                    src="/book-cover-default.jpg"
-                    width={130}
-                    height={130}
-                    alt="book cover"
-                  />
+                  {bookCover ? (
+                    <Image
+                      className="rounded object-cover h-full shadow-xl"
+                      src={`https://qdoxynjkmbgpgncnmadr.supabase.co/storage/v1/object/public/images/${bookCover}`}
+                      width={130}
+                      height={130}
+                      alt="book cover"
+                    />
+                  ) : (
+                    <Image
+                      className="rounded object-cover h-full shadow-xl"
+                      src="/book-cover-default.jpg"
+                      width={130}
+                      height={130}
+                      alt="book cover"
+                    />
+                  )}
                 </Link>
                 <CardHeader className="text-xl flex flex-col gap-4">
                   <Link href={`/all-projects/${id}`}>

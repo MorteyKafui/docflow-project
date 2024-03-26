@@ -1,6 +1,4 @@
 import SubmitButton from "@/components/SubmitButton";
-import TagInputField from "@/components/TagInputField";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -8,28 +6,6 @@ import prisma from "@/utils/db";
 import supabase from "@/utils/supabse";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
-
-export const uploadFile = async (file: File): Promise<string> => {
-  // const imagePath = `https://qdoxynjkmbgpgncnmadr.supabase.co/storage/v1/object/public/DocFlowImages/${file}`;
-
-  // Upload file to Supabase Storage
-  // const { data, error } = await supabase.storage
-  //   .from("DocFlowImages") // Replace 'your_bucket_name' with your actual bucket name
-  //   .upload(`images/${file.name}`, file);
-  const { data, error } = await supabase.storage
-    .from("DocFlowImages") // Replace 'your_bucket_name' with your actual bucket name
-    .upload(
-      `https://qdoxynjkmbgpgncnmadr.supabase.co/storage/v1/object/public/DocFlowImages/${file.name}`,
-      file
-    );
-
-  // if (error) {
-  //   throw new Error(error.message);
-  // }
-
-  // Return the URL of the uploaded file
-  return data?.path || "";
-};
 
 const AddProject = async () => {
   const { getUser } = getKindeServerSession();
@@ -42,21 +18,25 @@ const AddProject = async () => {
   const postData = async (formData: FormData) => {
     "use server";
 
-    const bookCoverFile = formData.get("bookCover") as File;
-    const bookCover = await uploadFile(bookCoverFile);
-    console.log(`cover: ${bookCover}`);
-    console.log(`file: ${bookCoverFile}`);
-
     const title = formData.get("title") as string;
     const course = formData.get("course") as string;
     const bookTitle = formData.get("bookTitle") as string;
     const courseCode = formData.get("courseCode") as string;
+    const image = formData.get("image") as File;
     const members = formData.get("members") as string;
     const supervisor = formData.get("supervisor") as string;
     const documentation = formData.get("documentation") as string;
     const projectUrl = formData.get("url") as string;
     const sourceCode = formData.get("sourceCode") as string;
     const year = formData.get("year") as string;
+
+    const { data: imageData, error } = await supabase.storage
+      .from("images")
+      .upload(`${image.name}-${new Date()}`, image, {
+        cacheControl: "2592000",
+        contentType: "image/png",
+        upsert: false,
+      });
 
     await prisma.project.create({
       data: {
@@ -67,7 +47,7 @@ const AddProject = async () => {
         courseCode,
         members,
         supervisor,
-        bookCover,
+        bookCover: imageData?.path as string,
         documentation,
         projectUrl,
         sourceCode,
@@ -75,7 +55,7 @@ const AddProject = async () => {
       },
     });
 
-    return redirect("/all-projects");
+    return redirect("/dashboard");
   };
 
   return (
@@ -97,13 +77,20 @@ const AddProject = async () => {
               id="title"
               type="text"
               placeholder="Project Title"
+              required
             />
           </div>
           <div className="flex flex-col gap-4">
             <Label className="text-xl" htmlFor="course">
               Course
             </Label>
-            <Input name="course" id="course" type="text" placeholder="Course" />
+            <Input
+              name="course"
+              id="course"
+              type="text"
+              placeholder="Course"
+              required
+            />
           </div>
           <div className="flex flex-col gap-4">
             <Label className="text-xl" htmlFor="bookTitle">
@@ -114,6 +101,7 @@ const AddProject = async () => {
               id="bookTitle"
               type="text"
               placeholder="Book Title"
+              required
             />
           </div>
           <div className="flex flex-col gap-4">
@@ -125,6 +113,7 @@ const AddProject = async () => {
               id="courseCode"
               type="text"
               placeholder="Course Code"
+              required
             />
           </div>
           <div className="flex flex-col gap-4">
@@ -134,15 +123,10 @@ const AddProject = async () => {
             <Textarea
               name="members"
               id="members"
-              placeholder="Project members names separated by comma(,)"
+              placeholder="Write names of members separated by comma(,)"
+              required
             />
           </div>
-          {/* <div className="flex flex-col gap-4">
-            <Label className="text-xl" htmlFor="members">
-              Names of Project Members
-            </Label>
-            <TagInputField />
-          </div> */}
           <div className="flex flex-col gap-4">
             <Label className="text-xl" htmlFor="supervisor">
               Name of Supervisor
@@ -152,27 +136,36 @@ const AddProject = async () => {
               name="supervisor"
               type="text"
               placeholder="Name of Supervisor"
+              required
             />
           </div>
           <div className="flex flex-col gap-4">
-            <Label className="text-xl" htmlFor="bookCover">
+            <Label className="text-xl flex items-center" htmlFor="image">
               Book Cover
+              <span className="text-sm ml-10 text-rose-500">
+                (accepted image format: png)
+              </span>
             </Label>
             <Input
-              id="bookCover"
-              name="bookCover"
+              id="image"
+              name="image"
               type="file"
               placeholder="Book Cover"
+              required
             />
           </div>
           <div className="flex flex-col gap-4">
-            <Label className="text-xl" htmlFor="file">
+            <Label className="text-xl flex items-center" htmlFor="file">
               Documentation
+              <span className="text-sm ml-10 text-rose-500">
+                (type documentation here)
+              </span>
             </Label>
             <Textarea
               name="documentation"
               id="documentation"
               placeholder="Type your documentation"
+              required
             />
           </div>
           <div className="flex flex-col gap-4">
@@ -190,21 +183,22 @@ const AddProject = async () => {
               name="sourceCode"
               type="url"
               placeholder="Source Code URL"
+              required
             />
           </div>
           <div className="flex flex-col gap-4">
             <Label className="text-xl" htmlFor="year">
               Year
             </Label>
-            <Input id="year" name="year" type="text" placeholder="Year" />
+            <Input
+              id="year"
+              name="year"
+              type="text"
+              placeholder="Year"
+              required
+            />
           </div>
           <SubmitButton />
-          {/* <Button
-            className="w-full col-start-1 col-end-3 font-bold text-xl hover:opacity-90 transition-all duration-500"
-            size="lg"
-          >
-            Submit
-          </Button> */}
         </form>
       </div>
     </section>

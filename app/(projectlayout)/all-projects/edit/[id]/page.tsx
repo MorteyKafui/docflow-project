@@ -1,12 +1,11 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { Label } from "@/components/ui/label";
-import prisma from "@/utils/db";
-import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
 import SubmitButton from "@/components/SubmitButton";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import prisma from "@/utils/db";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 const getData = async ({
   userId,
