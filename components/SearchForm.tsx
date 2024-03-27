@@ -1,25 +1,12 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { Search } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import {
-  redirect,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
-import { useDebouncedCallback } from "use-debounce";
 
 const SearchForm = () => {
-  // const [query, setQuery] = useState("");
-  // const router = useRouter();
-
-  // const handleSearch = (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-
-  //   router.push(`/search?query=${query}`);
-  // };
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -40,12 +27,14 @@ const SearchForm = () => {
     <form className="flex w-full max-w-sm items-center space-x-2">
       <Input
         name="search"
-        type="text"
+        type="search"
         placeholder="search projects"
         onChange={e => handleSearch(e.target.value)}
         defaultValue={searchParams.get("query")?.toString()}
       />
-      <Button type="submit">Search</Button>
+      <Button size="sm" type="submit">
+        <Search />
+      </Button>
     </form>
   );
 };

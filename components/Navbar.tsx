@@ -17,6 +17,7 @@ import {
 } from "./ui/dropdown-menu";
 
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import SearchForm from "./SearchForm";
 
 const Navbar = async () => {
   const { isAuthenticated, getUser } = getKindeServerSession();
@@ -31,7 +32,7 @@ const Navbar = async () => {
           </Link>
         </h1>
         {(await isAuthenticated()) ? (
-          <ul className="flex gap-8">
+          <ul className="flex items-center gap-8">
             <li>
               <Link
                 href="/all-projects"
@@ -40,19 +41,13 @@ const Navbar = async () => {
                 All Projects
               </Link>
             </li>
-
             <li>
-              <Link
-                href="/add"
-                className="hover:text-rose-700 transition-all duration-500"
-              >
-                Add New Project
-              </Link>
+              <SearchForm />
             </li>
             <li>
               <Link
                 href="/dashboard"
-                className="hover:text-rose-700 transition-all duration-500 ml-20 border-2 p-2 border-rose-500 rounded"
+                className="transition-all duration-500 ml-20 border-2 p-2 bg-rose-500 rounded"
               >
                 Go to Dashboard
               </Link>
