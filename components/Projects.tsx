@@ -1,36 +1,55 @@
+"use client";
+
 import prisma from "@/utils/db";
 import { revalidatePath, unstable_noStore } from "next/cache";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Input } from "./ui/input";
-import { unstable_noStore as noStore } from "next/cache";
+import SearchForm from "./SearchForm";
+import { useRouter, useSearchParams } from "next/navigation";
 
-const getProjects = async () => {
-  noStore();
+interface ProjectsProp {
+  projects: {
+    id: string;
+    title: string;
+    course: string;
+    bookTitle: string;
+    courseCode: string;
+    members: string;
+    supervisor: string;
+    bookCover: string;
+    documentation: string;
+    projectUrl: string | null;
+    sourceCode: string;
+    year: string;
+    userId: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+  }[];
+}
 
-  const data = await prisma.project.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+const AllProjects = ({ projects }: ProjectsProp) => {
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("search");
 
-  revalidatePath("/all-projects");
-
-  return data;
-};
-
-const AllProjects = async () => {
-  const projects = await getProjects();
+  if (searchQuery) {
+    projects = projects.filter(project =>
+      project.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }
 
   return (
     <div className="max-w-screen-xl container mx-auto px-10 py-8">
       <div className="flex justify-between items-center mt-8 mb-20">
-        <h2 className="text-5xl font-semibold">Projects</h2>
-        <form className="flex w-full max-w-sm items-center space-x-2">
-          <Input type="text" placeholder="search projects" />
-          <Button type="submit">Search</Button>
-        </form>
+        {!searchQuery ? (
+          <h2 className="text-5xl font-semibold">Projects</h2>
+        ) : (
+          <h2 className="text-5xl font-semibold">
+            Search results for &mdash;{searchQuery}
+          </h2>
+        )}
+        <SearchForm />
       </div>
       <div className="grid grid-cols-4">
         <div className="col-span-2">
