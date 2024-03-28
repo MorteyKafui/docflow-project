@@ -2,7 +2,7 @@ import AllProjects from "@/components/Projects";
 import prisma from "@/utils/db";
 import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 
-export const getProjects = async () => {
+const getProjects = async () => {
   noStore();
 
   const data = await prisma.project.findMany({
