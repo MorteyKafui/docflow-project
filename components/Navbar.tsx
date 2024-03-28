@@ -18,13 +18,14 @@ import {
 
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import SearchForm from "./SearchForm";
+import MobileNav from "./MobileNav";
 
 const Navbar = async () => {
   const { isAuthenticated, getUser } = getKindeServerSession();
   const user = await getUser();
 
   return (
-    <nav className="border-b-2 border-rose-500 sticky w-full top-0 dark:bg-[#0c0a09] bg-white">
+    <nav className="border-b-2 border-rose-500 sticky w-full top-0 dark:bg-[#0c0a09] bg-white z-10">
       <div className="max-w-screen-xl mx-auto px10 py-4 container flex justify-between items-center text-lg font-medium">
         <h1 className="text-3xl font-bold">
           <Link href="/">
@@ -33,18 +34,18 @@ const Navbar = async () => {
         </h1>
         {(await isAuthenticated()) ? (
           <ul className="flex items-center gap-8">
-            <li>
+            <li className="hidden lg:block">
               <Link
                 href="/all-projects"
                 className="hover:text-rose-700 transition-all duration-500"
               >
-                All Projects
+                Projects
               </Link>
             </li>
-            <li>
+            <li className="hidden lg:block">
               <SearchForm />
             </li>
-            <li>
+            <li className="hidden lg:block">
               <Link
                 href="/dashboard"
                 className="transition-all duration-500 ml-20 border-2 p-2 bg-rose-500 rounded"
@@ -56,16 +57,16 @@ const Navbar = async () => {
         ) : null}
         <div className="flex gap-4 items-center">
           {!(await isAuthenticated()) ? (
-            <>
+            <div className="hidden lg:block">
               <Button asChild>
                 <RegisterLink>Sign up</RegisterLink>
               </Button>
               <Button variant="ghost" asChild>
                 <LoginLink>Sign in</LoginLink>
               </Button>
-            </>
+            </div>
           ) : (
-            <>
+            <div className="hidden lg:block">
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Avatar>
@@ -91,14 +92,15 @@ const Navbar = async () => {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-            </>
+            </div>
           )}
-          {/* <Button asChild>
-            <Link href="/login" className="font-bold uppercase text-lg">
-              Login
-            </Link>
-          </Button> */}
-          <ModeToggle />
+          <div className="hidden lg:block">
+            <ModeToggle />
+          </div>
+
+          <div className="block md:hidden">
+            <MobileNav />
+          </div>
         </div>
       </div>
     </nav>

@@ -48,16 +48,16 @@ const DashboardPage = async () => {
 
   return (
     <section className="grid items-start gap-y-10">
-      <div className="flex items-center justify-between px-2">
+      <div className="flex flex-col lg:flex-row items-center justify-between px-2">
         <div className="grid gap-2">
-          <h2 className="text-3xl font-bold ">
+          <h2 className="text-xl  lg:text-3xl font-bold ">
             Welcome To Your Dashboard, {user?.given_name} {user?.family_name}
           </h2>
           <p className="text-lg text-muted-foreground">
             Here you can see your recent projects
           </p>
         </div>
-        <Button asChild>
+        <Button className="my-5 lg:mt-0" asChild>
           <Link className="font-medium text-lg" href="/add">
             Create a new Project
           </Link>
@@ -89,7 +89,7 @@ const DashboardPage = async () => {
                 <Link href={`/all-projects/${id}`}>
                   {bookCover ? (
                     <Image
-                      className="rounded object-cover h-full shadow-xl"
+                      className="rounded hidden lg:block object-cover h-full shadow-xl"
                       src={`https://qdoxynjkmbgpgncnmadr.supabase.co/storage/v1/object/public/images/${bookCover}`}
                       width={130}
                       height={130}
@@ -108,7 +108,9 @@ const DashboardPage = async () => {
                 <CardHeader className="text-xl flex flex-col gap-4">
                   <Link href={`/all-projects/${id}`}>
                     <div className="flex flex-col gap-2">
-                      <CardTitle className="font-bold mb-2">{title}</CardTitle>
+                      <CardTitle className="font-bold text-lg lg:text-2xl mb-2">
+                        {title}
+                      </CardTitle>
                       <p className="text-sm italic text-zinc-400 font-medium">
                         {course}
                       </p>
@@ -120,7 +122,7 @@ const DashboardPage = async () => {
                 </CardHeader>
 
                 <CardContent className="ml-auto">
-                  <div className="flex gap-x-4">
+                  <div className="flex flex-col lg:flex-row gap-4">
                     <Link href={`/all-projects/edit/${id}`}>
                       <Button size="icon" variant="outline">
                         <Edit className="w-4 h-4" />

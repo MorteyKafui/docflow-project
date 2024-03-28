@@ -35,7 +35,7 @@ const ProjectPage = async ({ params }: { params: { id: string } }) => {
   return (
     <section className="my-20">
       <div className="max-w-7xl container mx-auto px-10 py-8">
-        <header className="flex gap-8">
+        <header className="flex flex-col lg:flex-row gap-8">
           {project?.bookCover ? (
             <Image
               className="rounded object-cover h-full shadow-xl"
@@ -61,8 +61,8 @@ const ProjectPage = async ({ params }: { params: { id: string } }) => {
             </div>
           </div>
         </header>
-        <article className="my-20 grid grid-cols-1 lg:grid-cols-3 gap-10">
-          <div className="col-span-2">
+        <article className="lg:my-20 grid grid-cols-1 lg:grid-cols-3 gap-10">
+          <div className="col-span-2 order-1 lg:order-none">
             <h2 className="text-3xl my-8 text-rose-500 font-bold">
               Documentation
             </h2>

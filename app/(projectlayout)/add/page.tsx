@@ -62,10 +62,10 @@ const AddProject = async () => {
         </h2>
         <form
           action={postData}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-10"
+          className="lg:grid lg:grid-cols-2 gap-10 flex flex-col"
         >
           <div className="flex flex-col gap-4">
-            <Label className="text-xl" htmlFor="title">
+            <Label className="lg:text-xl" htmlFor="title">
               Project Title
             </Label>
             <Input
@@ -77,7 +77,7 @@ const AddProject = async () => {
             />
           </div>
           <div className="flex flex-col gap-4">
-            <Label className="text-xl" htmlFor="course">
+            <Label className="lg:text-xl" htmlFor="course">
               Course
             </Label>
             <Input
@@ -89,7 +89,7 @@ const AddProject = async () => {
             />
           </div>
           <div className="flex flex-col gap-4">
-            <Label className="text-xl" htmlFor="bookTitle">
+            <Label className="lg:text-xl" htmlFor="bookTitle">
               Book Title
             </Label>
             <Input
@@ -101,7 +101,7 @@ const AddProject = async () => {
             />
           </div>
           <div className="flex flex-col gap-4">
-            <Label className="text-xl" htmlFor="courseCode">
+            <Label className="lg:text-xl" htmlFor="courseCode">
               Course Code
             </Label>
             <Input
@@ -113,7 +113,7 @@ const AddProject = async () => {
             />
           </div>
           <div className="flex flex-col gap-4">
-            <Label className="text-xl flex items-center" htmlFor="members">
+            <Label className="lg:text-xl flex items-center" htmlFor="members">
               Names of Project Members
               <span className="text-sm ml-10 text-rose-500">
                 (separate names by commas)
@@ -127,7 +127,7 @@ const AddProject = async () => {
             />
           </div>
           <div className="flex flex-col gap-4">
-            <Label className="text-xl" htmlFor="supervisor">
+            <Label className="lg:text-xl" htmlFor="supervisor">
               Name of Supervisor
             </Label>
             <Input
@@ -139,7 +139,7 @@ const AddProject = async () => {
             />
           </div>
           <div className="flex flex-col gap-4">
-            <Label className="text-xl flex items-center" htmlFor="image">
+            <Label className="lg:text-xl flex items-center" htmlFor="image">
               Book Cover
             </Label>
             <Input
@@ -151,7 +151,7 @@ const AddProject = async () => {
             />
           </div>
           <div className="flex flex-col gap-4">
-            <Label className="text-xl flex items-center" htmlFor="file">
+            <Label className="lg:text-xl flex items-center" htmlFor="file">
               Documentation
               <span className="text-sm ml-10 text-rose-500">
                 (type documentation here)
@@ -165,13 +165,13 @@ const AddProject = async () => {
             />
           </div>
           <div className="flex flex-col gap-4">
-            <Label className="text-xl" htmlFor="url">
+            <Label className="lg:text-xl" htmlFor="url">
               Project URL(Optional)
             </Label>
             <Input id="url" name="url" type="url" placeholder="Project URL" />
           </div>
           <div className="flex flex-col gap-4">
-            <Label className="text-xl" htmlFor="sourceCode">
+            <Label className="lg:text-xl" htmlFor="sourceCode">
               Source Code URL
             </Label>
             <Input
@@ -183,7 +183,7 @@ const AddProject = async () => {
             />
           </div>
           <div className="flex flex-col gap-4">
-            <Label className="text-xl" htmlFor="year">
+            <Label className="lg:text-xl" htmlFor="year">
               Year
             </Label>
             <Input

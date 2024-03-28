@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import SearchResults from "./SearchResults";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import SearchForm from "./SearchForm";
 
 interface ProjectsProp {
   projects: {
@@ -47,7 +48,7 @@ const AllProjects = ({ projects }: ProjectsProp) => {
   }
 
   return (
-    <div className="max-w-screen-xl container mx-auto px-10 py-8">
+    <div className="max-w-screen-xl container mx-auto px-10 py-8 h-full">
       <div className="flex justify-between items-center mt-8 mb-20">
         {!searchQuery ? (
           <h2 className="text-5xl font-semibold">Projects</h2>
@@ -57,7 +58,10 @@ const AllProjects = ({ projects }: ProjectsProp) => {
           </h2>
         )}
       </div>
-      <div className="grid grid-cols-4">
+      <div className="block lg:hidden mb-16">
+        <SearchForm />
+      </div>
+      <div className="grid lg:grid-cols-4">
         <div className="col-span-2">
           {projects.length < 1 ? (
             <>
@@ -93,7 +97,7 @@ const AllProjects = ({ projects }: ProjectsProp) => {
           )}
         </div>
 
-        <div className="col-start-4">
+        <div className="col-start-4 hidden lg:block">
           <Card className="flex flex-col shadow-lg">
             <CardHeader>
               <CardTitle className="font-bold text-center text-xl text-rose-700">

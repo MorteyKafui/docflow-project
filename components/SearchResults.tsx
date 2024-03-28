@@ -30,14 +30,14 @@ const SearchResults = ({ results }: ProjectsProp) => {
   return (
     <div className="max-w-screen-xl container mx-auto px-10 py-8 flex flex-col gap-4">
       <div>
-        <h2 className="text-5xl font-semibold my-10">
+        <h2 className="text-xl lg:text-4xl font-semibold my-10">
           Search results for: {searchQuery?.toLowerCase()}
         </h2>
       </div>
       <div className="max-w-5xl mx-auto px-10 py-8">
         {results.length < 1 ? (
           <div className="flex flex-col gap-10">
-            <p className="text-3xl font-medium">No projects found</p>
+            <p className="text-xl lg:text-3xl font-medium">No projects found</p>
             <Button>
               <Link href="/all-projects">Go Back</Link>
             </Button>

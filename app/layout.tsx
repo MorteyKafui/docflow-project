@@ -38,8 +38,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
+          <main className="h-screen">
+            {children}
+            <Footer />
+          </main>
         </ThemeProvider>
       </body>
     </html>
