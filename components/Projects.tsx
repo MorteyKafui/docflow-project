@@ -1,14 +1,10 @@
 "use client";
 
-import prisma from "@/utils/db";
-import { revalidatePath, unstable_noStore } from "next/cache";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import SearchResults from "./SearchResults";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { Input } from "./ui/input";
-import SearchForm from "./SearchForm";
-import { redirect, useRouter, useSearchParams } from "next/navigation";
-import SearchResults from "./SearchResults";
 
 interface ProjectsProp {
   projects: {
@@ -38,8 +34,6 @@ const AllProjects = ({ projects }: ProjectsProp) => {
     projects = projects.filter(project =>
       project.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
-
-    // redirect(`all-projects/search/${searchQuery}`);
   }
 
   const searchResults =
@@ -52,10 +46,6 @@ const AllProjects = ({ projects }: ProjectsProp) => {
     return <SearchResults results={searchResults} />;
   }
 
-  // if (searchResults) {
-  //   redirect("all-projects/search");
-  // }
-
   return (
     <div className="max-w-screen-xl container mx-auto px-10 py-8">
       <div className="flex justify-between items-center mt-8 mb-20">
@@ -66,7 +56,6 @@ const AllProjects = ({ projects }: ProjectsProp) => {
             Search results for &mdash;{searchQuery}
           </h2>
         )}
-        {/* <SearchForm /> */}
       </div>
       <div className="grid grid-cols-4">
         <div className="col-span-2">
@@ -103,6 +92,7 @@ const AllProjects = ({ projects }: ProjectsProp) => {
             ))
           )}
         </div>
+
         <div className="col-start-4">
           <Card className="flex flex-col shadow-lg">
             <CardHeader>
