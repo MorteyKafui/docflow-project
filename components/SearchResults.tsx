@@ -30,7 +30,7 @@ const SearchResults = ({ results }: ProjectsProp) => {
   return (
     <div className="max-w-screen-xl container mx-auto px-10 py-8 flex flex-col gap-4">
       <div>
-        <h2 className="text-xl lg:text-4xl font-semibold my-10">
+        <h2 className="text-xl lg:text-4xl font-semibold my-10 text-secondBg">
           Search results for: {searchQuery?.toLowerCase()}
         </h2>
       </div>
@@ -44,22 +44,25 @@ const SearchResults = ({ results }: ProjectsProp) => {
           </div>
         ) : (
           results.map(({ id, title, year, course }) => (
-            <Card className="mb-8" key={id}>
+            <Card className="mb-8 bg-firstBg text-secondBg" key={id}>
               <Link href={`/all-projects/${id}`}>
                 <div className="flex justify-between items-center">
                   <CardHeader className="text-xl flex flex-col gap-4">
                     <div className="flex flex-col gap-2">
                       <CardTitle className="font-bold mb-2">{title}</CardTitle>
-                      <p className="text-sm italic text-zinc-400 font-medium">
+                      <p className="text-sm italic text-muted font-medium">
                         {course}
                       </p>
-                      <p className="text-sm italic text-zinc-400 font-medium">
+                      <p className="text-sm italic text-muted font-medium">
                         {year}
                       </p>
                     </div>
                   </CardHeader>
                   <CardContent className="ml-auto">
-                    <Button asChild>
+                    <Button
+                      className="bg-secondBg text-firstBg hover:bg-white hover:text-firstBg transition-all duration-500"
+                      asChild
+                    >
                       <Link href={`/all-projects/${id}`}>View Details</Link>
                     </Button>
                   </CardContent>

@@ -90,14 +90,14 @@ const EditProjectPage = async ({ params }: { params: { id: string } }) => {
   };
 
   return (
-    <section className="mb-20">
-      <div className="max-w-6xl container mx-auto px-10 py-8">
-        <h2 className="my-10 text-center text-4xl text-rose-700 font-bold">
+    <section className="pt-10 pb-20">
+      <div className="max-w-6xl container mx-auto px-10 py-8 text-white">
+        <h2 className="my-10 text-center text-3xl text-secondBg font-bold">
           Edit Project
         </h2>
         <form
           action={postData}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-10"
+          className="lg:grid lg:grid-cols-2 gap-10 flex flex-col"
         >
           <div className="flex flex-col gap-4">
             <Label className="text-xl" htmlFor="title">
@@ -109,6 +109,7 @@ const EditProjectPage = async ({ params }: { params: { id: string } }) => {
               type="text"
               placeholder="Project Title"
               defaultValue={project?.title}
+              className="text-black"
             />
           </div>
           <div className="flex flex-col gap-4">
@@ -121,6 +122,7 @@ const EditProjectPage = async ({ params }: { params: { id: string } }) => {
               id="course"
               type="text"
               placeholder="Course"
+              className="text-black"
             />
           </div>
           <div className="flex flex-col gap-4">
@@ -133,6 +135,7 @@ const EditProjectPage = async ({ params }: { params: { id: string } }) => {
               id="bookTitle"
               type="text"
               placeholder="Book Title"
+              className="text-black"
             />
           </div>
           <div className="flex flex-col gap-4">
@@ -145,6 +148,7 @@ const EditProjectPage = async ({ params }: { params: { id: string } }) => {
               id="courseCode"
               type="text"
               placeholder="Course Code"
+              className="text-black"
             />
           </div>
           <div className="flex flex-col gap-4">
@@ -156,6 +160,7 @@ const EditProjectPage = async ({ params }: { params: { id: string } }) => {
               name="members"
               id="members"
               placeholder="Project members names separated by comma(,)"
+              className="text-black"
             />
           </div>
 
@@ -169,6 +174,7 @@ const EditProjectPage = async ({ params }: { params: { id: string } }) => {
               name="supervisor"
               type="text"
               placeholder="Name of Supervisor"
+              className="text-black"
             />
           </div>
           <div className="flex flex-col gap-4">
@@ -180,6 +186,7 @@ const EditProjectPage = async ({ params }: { params: { id: string } }) => {
               name="bookCover"
               type="file"
               placeholder="Book Cover"
+              className="text-black"
             />
           </div>
           <div className="flex flex-col gap-4">
@@ -191,6 +198,7 @@ const EditProjectPage = async ({ params }: { params: { id: string } }) => {
               name="documentation"
               id="documentation"
               placeholder="Type your documentation"
+              className="text-black"
             />
           </div>
           <div className="flex flex-col gap-4">
@@ -215,6 +223,7 @@ const EditProjectPage = async ({ params }: { params: { id: string } }) => {
               name="sourceCode"
               type="url"
               placeholder="Source Code URL"
+              className="text-black"
             />
           </div>
           <div className="flex flex-col gap-4">
@@ -227,15 +236,10 @@ const EditProjectPage = async ({ params }: { params: { id: string } }) => {
               name="year"
               type="text"
               placeholder="Year"
+              className="text-black"
             />
           </div>
           <SubmitButton />
-          {/* <Button
-            className="w-full col-start-1 col-end-3 font-bold text-xl hover:opacity-90 transition-all duration-500"
-            size="lg"
-          >
-            Save
-          </Button> */}
         </form>
       </div>
     </section>

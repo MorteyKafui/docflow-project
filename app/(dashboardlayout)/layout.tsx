@@ -11,7 +11,7 @@ const DashboardLayout = async ({ children }: PropsWithChildren) => {
     return redirect("/");
   }
   return (
-    <div className="flex flex-col space-y-6 my-20">
+    <div className="flex flex-col py-16">
       <div className="max-w-screen-xl mx-auto container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
         <aside className="hidden w-[200px] flex-col md:flex">
           <DashboardNav />

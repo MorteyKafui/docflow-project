@@ -22,6 +22,8 @@ const config = {
         poppins: ["var(--font-poppins)"],
       },
       colors: {
+        firstBg: "#25145B",
+        secondBg: "#DDB61B",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

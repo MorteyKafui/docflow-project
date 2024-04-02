@@ -18,7 +18,7 @@ const SubmitButton = () => {
         </Button>
       ) : (
         <Button
-          className="w-full col-start-1 col-end-3 font-bold text-xl"
+          className="w-full col-start-1 col-end-3 font-bold text-xl bg-secondBg text-firstBg hover:text-muted transition-all duration-500"
           type="submit"
         >
           Submit

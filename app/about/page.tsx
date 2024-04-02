@@ -1,7 +1,7 @@
 const AboutPage = () => {
   return (
     <section>
-      <div className="max-w-screen-md container p-10 text-lg">
+      <div className="max-w-screen-md container p-10 text-lg text-white">
         <div className="flex flex-col gap-2 mb-10">
           <h2 className="text-4xl font-bold text-center mb-1 text-rose-700">
             About DocFlow

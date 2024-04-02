@@ -32,7 +32,7 @@ const SearchForm = () => {
         onChange={e => handleSearch(e.target.value)}
         defaultValue={searchParams.get("query")?.toString()}
       />
-      <Button size="sm" type="submit">
+      <Button className="bg-secondBg" size="sm" type="submit">
         <Search />
       </Button>
     </form>

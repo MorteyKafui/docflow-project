@@ -47,18 +47,21 @@ const DashboardPage = async () => {
   };
 
   return (
-    <section className="grid items-start gap-y-10">
+    <section className="grid items-start gap-y-10 text-white">
       <div className="flex flex-col lg:flex-row items-center justify-between px-2">
         <div className="grid gap-2">
-          <h2 className="text-xl  lg:text-3xl font-bold ">
+          <h2 className="text-xl text-secondBg  lg:text-3xl font-bold ">
             Welcome To Your Dashboard, {user?.given_name} {user?.family_name}
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-lg text-muted">
             Here you can see your recent projects
           </p>
         </div>
-        <Button className="my-5 lg:mt-0" asChild>
-          <Link className="font-medium text-lg" href="/add">
+        <Button
+          className="my-5 text-firstBg transition-all duration-500 hover:text-white lg:mt-0"
+          asChild
+        >
+          <Link className="font-bold bg-secondBg text-lg" href="/add">
             Create a new Project
           </Link>
         </Button>
@@ -84,7 +87,10 @@ const DashboardPage = async () => {
       ) : (
         <div>
           {data.map(({ title, course, id, year, bookCover }) => (
-            <Card className="mb-8" key={id}>
+            <Card
+              className="mb-8 bg-firstBg border-secondBg text-secondBg"
+              key={id}
+            >
               <div className="flex items-center">
                 <Link href={`/all-projects/${id}`}>
                   {bookCover ? (
@@ -111,10 +117,10 @@ const DashboardPage = async () => {
                       <CardTitle className="font-bold text-lg lg:text-2xl mb-2">
                         {title}
                       </CardTitle>
-                      <p className="text-sm italic text-zinc-400 font-medium">
+                      <p className="text-sm italic text-muted font-medium">
                         {course}
                       </p>
-                      <p className="text-sm italic text-zinc-400 font-medium">
+                      <p className="text-sm italic text-muted font-medium">
                         {year}
                       </p>
                     </div>
@@ -130,7 +136,7 @@ const DashboardPage = async () => {
                     </Link>
                     <form action={deleteProject}>
                       <input type="hidden" name="projectId" value={id} />
-                      <Button type="submit" size="icon">
+                      <Button className="bg-red-600" type="submit" size="icon">
                         <Trash className="w-4 h-4" />
                       </Button>
                     </form>

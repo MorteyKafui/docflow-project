@@ -15,9 +15,9 @@ const MobileNav = async () => {
   return (
     <Sheet>
       <SheetTrigger>
-        <Menu />
+        <Menu color="#DDB61B" />
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="bg-firstBg text-muted">
         <nav className="uppercase font-bold text-2xl tracking-wider">
           <ul className="flex flex-col justify-between my-10 gap-10 h-full">
             <li>
@@ -32,7 +32,7 @@ const MobileNav = async () => {
           </ul>
           {!(await isAuthenticated()) ? (
             <div className="flex gap-8">
-              <Button asChild>
+              <Button className="bg-red-600" asChild>
                 <RegisterLink>Sign up</RegisterLink>
               </Button>
               <Button
@@ -45,7 +45,10 @@ const MobileNav = async () => {
             </div>
           ) : (
             <div>
-              <Button asChild className="font-semibold">
+              <Button
+                asChild
+                className="font-semibold bg-secondBg text-firstBg hover:text-muted duration-500 transition-all"
+              >
                 <LogoutLink>Logout</LogoutLink>
               </Button>
             </div>

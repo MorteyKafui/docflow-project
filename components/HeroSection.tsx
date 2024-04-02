@@ -41,13 +41,14 @@ const HeroSection = () => {
   return (
     <header className="hero" ref={heroContainer}>
       <div className="flex flex-col justify-center lg:items-center h-screen gap-8">
-        <h1 className="text-3xl lg:text-6xl font-poppins lg:text-center">
+        <h1 className="text-3xl text-secondBg lg:text-6xl font-poppins lg:text-center">
           <span className="text-rose-500">Effortless</span> Document{" "}
-          <span className="text-green-400">Management</span> Made Simple
+          <span className="text-green-400">Management</span> Made{" "}
+          <span className="text-rose-500">Simple</span>
         </h1>
-        <p className="text-lg text-gray-400 lg:text-center">
+        <p className="text-lg text-slate-200 lg:text-center">
           Experience the{" "}
-          <span className="text-rose-500 font-bold">next level</span> of
+          <span className="text-secondBg font-bold">next level</span> of
           document organization and efficiency. Our platform elevates your
           document management process, making it more{" "}
           <span className="text-green-500 font-bold">
@@ -55,11 +56,14 @@ const HeroSection = () => {
           </span>
         </p>
         <div className="btns flex gap-10">
-          <Button className="text-lg font-bold " asChild>
+          <Button
+            className="text-lg font-bold bg-secondBg text-firstBg hover:text-muted transition-all duration-500"
+            asChild
+          >
             <RegisterLink>Get Started</RegisterLink>
           </Button>
           <Button
-            className="font-bold text-lg border-2 border-rose-700"
+            className="font-bold text-lg border-2 border-secondBg text-white hover:bg-secondBg hover:text-firstBg duration-500 transition-all"
             asChild
             variant="ghost"
           >

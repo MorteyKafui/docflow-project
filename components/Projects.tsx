@@ -51,7 +51,7 @@ const AllProjects = ({ projects }: ProjectsProp) => {
     <div className="max-w-screen-xl container mx-auto px-10 py-8 h-full">
       <div className="flex justify-between items-center mt-8 mb-20">
         {!searchQuery ? (
-          <h2 className="text-5xl font-semibold">Projects</h2>
+          <h2 className="text-5xl text-secondBg font-semibold">Projects</h2>
         ) : (
           <h2 className="text-5xl font-semibold">
             Search results for &mdash;{searchQuery}
@@ -69,7 +69,10 @@ const AllProjects = ({ projects }: ProjectsProp) => {
             </>
           ) : (
             projects.map(({ id, title, year, course }) => (
-              <Card className="mb-8" key={id}>
+              <Card
+                className="mb-8 bg-firstBg text-secondBg border-secondBg"
+                key={id}
+              >
                 <Link href={`/all-projects/${id}`}>
                   <div className="flex justify-between items-center">
                     <CardHeader className="text-xl flex flex-col gap-4">
@@ -77,17 +80,25 @@ const AllProjects = ({ projects }: ProjectsProp) => {
                         <CardTitle className="font-bold mb-2">
                           {title}
                         </CardTitle>
-                        <p className="text-sm italic text-zinc-400 font-medium">
+                        <p className="text-sm italic text-white font-medium">
                           {course}
                         </p>
-                        <p className="text-sm italic text-zinc-400 font-medium">
+                        <p className="text-sm italic text-white font-medium">
                           {year}
                         </p>
                       </div>
                     </CardHeader>
                     <CardContent className="ml-auto">
-                      <Button asChild>
-                        <Link href={`/all-projects/${id}`}>View Details</Link>
+                      <Button
+                        className="bg-secondBg text-firstBg hover:bg-white hover:text-firstBg transition-all duration-500"
+                        asChild
+                      >
+                        <Link
+                          className="font-semibold"
+                          href={`/all-projects/${id}`}
+                        >
+                          View Details
+                        </Link>
                       </Button>
                     </CardContent>
                   </div>
@@ -98,22 +109,28 @@ const AllProjects = ({ projects }: ProjectsProp) => {
         </div>
 
         <div className="col-start-4 hidden lg:block">
-          <Card className="flex flex-col shadow-lg">
+          <Card className="flex flex-col shadow-2xl bg-firstBg border-secondBg text-secondBg">
             <CardHeader>
-              <CardTitle className="font-bold text-center text-xl text-rose-700">
+              <CardTitle className="font-bold text-center text-xl">
                 Recent Projects
               </CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col p-4">
               {projects.slice(0, 3).map(({ id, title, course, year }) => (
-                <div className="flex gap-5 mb-8" key={id}>
-                  <div>
-                    <h3 className="font-bold">{title}</h3>
-                    <p className="text-sm italic text-zinc-400 font-medium mt-2">
-                      {course} &mdash; <span>{year}</span>
-                    </p>
+                <Link
+                  className="hover:text-white transition-all duration-500"
+                  href={`/all-projects/${id}`}
+                  key={id}
+                >
+                  <div className="flex gap-5 mb-8">
+                    <div>
+                      <h3 className="font-bold">{title}</h3>
+                      <p className="text-sm italic font-medium mt-2">
+                        {course} &mdash; <span>{year}</span>
+                      </p>
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </CardContent>
           </Card>

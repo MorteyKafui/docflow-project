@@ -55,9 +55,9 @@ const AddProject = async () => {
   };
 
   return (
-    <section className="mb-20">
-      <div className="max-w-6xl container mx-auto px-10 py-8">
-        <h2 className="my-10 text-center text-4xl text-rose-700 font-bold">
+    <section className="pt-10 pb-20">
+      <div className="max-w-6xl container mx-auto px-10 py-8 text-white">
+        <h2 className="my-10 text-center text-3xl text-secondBg font-bold">
           Create a Project
         </h2>
         <form
@@ -115,7 +115,7 @@ const AddProject = async () => {
           <div className="flex flex-col gap-4">
             <Label className="lg:text-xl flex items-center" htmlFor="members">
               Names of Project Members
-              <span className="text-sm ml-10 text-rose-500">
+              <span className="text-sm ml-10 text-secondBg">
                 (separate names by commas)
               </span>
             </Label>
@@ -153,7 +153,7 @@ const AddProject = async () => {
           <div className="flex flex-col gap-4">
             <Label className="lg:text-xl flex items-center" htmlFor="file">
               Documentation
-              <span className="text-sm ml-10 text-rose-500">
+              <span className="text-sm ml-10 text-secondBg">
                 (type documentation here)
               </span>
             </Label>
