@@ -26,7 +26,6 @@ const HeroSection = () => {
 
       tl.from(".hero h1", {
         y: 100,
-        scale: 1.2,
       })
         .from(".hero p", {
           y: 120,
@@ -42,11 +41,11 @@ const HeroSection = () => {
   return (
     <header className="hero" ref={heroContainer}>
       <div className="flex flex-col justify-center lg:items-center h-screen gap-8">
-        <h1 className="text-5xl lg:text-6xl font-poppins lg:text-center">
+        <h1 className="text-3xl lg:text-6xl font-poppins lg:text-center">
           <span className="text-rose-500">Effortless</span> Document{" "}
           <span className="text-green-400">Management</span> Made Simple
         </h1>
-        <p className="text-xl text-gray-400 lg:text-center">
+        <p className="text-lg text-gray-400 lg:text-center">
           Experience the{" "}
           <span className="text-rose-500 font-bold">next level</span> of
           document organization and efficiency. Our platform elevates your
