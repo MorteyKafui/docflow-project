@@ -37,30 +37,36 @@ const Navbar = async () => {
             Doc<span className="text-rose-500">Flow</span>
           </h3>
         </Link>
+        <ul className="flex items-center gap-8">
+          <li className="hidden lg:block">
+            <Link
+              href="/all-projects"
+              className="hover:text-secondBg transition-all duration-500 text-white"
+            >
+              Projects
+            </Link>
+          </li>
 
-        {(await isAuthenticated()) ? (
-          <ul className="flex items-center gap-8">
-            <li className="hidden lg:block">
-              <Link
-                href="/all-projects"
-                className="hover:text-secondBg transition-all duration-500 text-white"
-              >
-                Projects
-              </Link>
-            </li>
-            <li className="hidden lg:block">
-              <SearchForm />
-            </li>
+          {(await isAuthenticated()) && (
             <li className="hidden lg:block">
               <Link
                 href="/dashboard"
-                className="transition-all duration-500 ml-20 border-2 p-2 bg-secondBg rounded-md text-firstBg hover:opacity-90"
+                className="hover:text-secondBg transition-all duration-500 text-white"
               >
-                Go to Dashboard
+                Dashboard
               </Link>
             </li>
-          </ul>
-        ) : null}
+          )}
+          <li className="hidden lg:block">
+            <Link
+              href="/about"
+              className="hover:text-secondBg transition-all duration-500 text-white"
+            >
+              About
+            </Link>
+          </li>
+        </ul>
+
         <div className="flex gap-4 items-center">
           {!(await isAuthenticated()) ? (
             <div className="hidden lg:block">

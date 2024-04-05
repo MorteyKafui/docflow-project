@@ -3,5 +3,5 @@ export default function middleware(req: any) {
   return withAuth(req);
 }
 export const config = {
-  matcher: ["/add", "/all-projects", "/dashboard"],
+  matcher: ["/add", "/dashboard"],
 };

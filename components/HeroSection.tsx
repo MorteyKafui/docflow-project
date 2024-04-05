@@ -42,9 +42,10 @@ const HeroSection = () => {
     <header className="hero" ref={heroContainer}>
       <div className="flex flex-col justify-center lg:items-center h-screen gap-8">
         <h1 className="text-3xl text-secondBg lg:text-6xl font-poppins lg:text-center">
-          <span className="text-rose-500">Effortless</span> Document{" "}
-          <span className="text-green-400">Management</span> Made{" "}
-          <span className="text-rose-500">Simple</span>
+          <span className="text-rose-500">Effortless</span>{" "}
+          <span className="text-green-400">Academic Project </span>{" "}
+          <span className="text-rose-500">Document Management </span>
+          <span className="text-secondBg">Made Simple</span>
         </h1>
         <p className="text-lg text-slate-200 lg:text-center">
           Experience the{" "}

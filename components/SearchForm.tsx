@@ -24,11 +24,12 @@ const SearchForm = () => {
   }, 500);
 
   return (
-    <form className="flex w-full max-w-sm items-center space-x-2">
+    <form className="flex w-full max-w-sm items-center space-x-2 text-firstBg">
       <Input
+        required
         name="search"
         type="search"
-        placeholder="search projects"
+        placeholder="search projects, titles, courses, years"
         onChange={e => handleSearch(e.target.value)}
         defaultValue={searchParams.get("query")?.toString()}
       />
