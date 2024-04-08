@@ -69,6 +69,7 @@ const AddProject = async () => {
               Project Title
             </Label>
             <Input
+              className="text-firstBg font-semibold"
               name="title"
               id="title"
               type="text"
@@ -81,6 +82,7 @@ const AddProject = async () => {
               Course
             </Label>
             <Input
+              className="text-firstBg font-semibold"
               name="course"
               id="course"
               type="text"
@@ -93,6 +95,7 @@ const AddProject = async () => {
               Book Title
             </Label>
             <Input
+              className="text-firstBg font-semibold"
               name="bookTitle"
               id="bookTitle"
               type="text"
@@ -105,6 +108,7 @@ const AddProject = async () => {
               Course Code
             </Label>
             <Input
+              className="text-firstBg font-semibold"
               name="courseCode"
               id="courseCode"
               type="text"
@@ -124,6 +128,7 @@ const AddProject = async () => {
               id="members"
               placeholder="Write names of members separated by comma(,)"
               required
+              className="text-firstBg font-semibold"
             />
           </div>
           <div className="flex flex-col gap-4">
@@ -131,6 +136,7 @@ const AddProject = async () => {
               Name of Supervisor
             </Label>
             <Input
+              className="text-firstBg font-semibold"
               id="supervisor"
               name="supervisor"
               type="text"
@@ -143,6 +149,7 @@ const AddProject = async () => {
               Book Cover
             </Label>
             <Input
+              className="text-firstBg font-semibold"
               id="image"
               name="image"
               type="file"
@@ -158,6 +165,7 @@ const AddProject = async () => {
               </span>
             </Label>
             <Textarea
+              className="text-firstBg font-semibold"
               name="documentation"
               id="documentation"
               placeholder="Type your documentation"
@@ -168,13 +176,20 @@ const AddProject = async () => {
             <Label className="lg:text-xl" htmlFor="url">
               Project URL(Optional)
             </Label>
-            <Input id="url" name="url" type="url" placeholder="Project URL" />
+            <Input
+              id="url"
+              name="url"
+              type="url"
+              placeholder="Project URL"
+              className="text-firstBg font-semibold"
+            />
           </div>
           <div className="flex flex-col gap-4">
             <Label className="lg:text-xl" htmlFor="sourceCode">
               Source Code URL
             </Label>
             <Input
+              className="text-firstBg font-semibold"
               id="code"
               name="sourceCode"
               type="url"
@@ -187,6 +202,7 @@ const AddProject = async () => {
               Year
             </Label>
             <Input
+              className="text-firstBg font-semibold"
               id="year"
               name="year"
               type="text"

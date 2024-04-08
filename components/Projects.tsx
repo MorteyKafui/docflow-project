@@ -233,7 +233,7 @@ const AllProjects = ({ projects }: ProjectsProp) => {
                 key={id}
               >
                 <Link href={`/all-projects/${id}`}>
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between flex-col">
                     <CardHeader className="text-xl flex flex-col gap-4">
                       <div className="flex flex-col gap-2">
                         <CardTitle className="font-bold mb-2">
@@ -247,9 +247,9 @@ const AllProjects = ({ projects }: ProjectsProp) => {
                         </p>
                       </div>
                     </CardHeader>
-                    <CardContent className="ml-auto">
+                    <CardContent>
                       <Button
-                        className="bg-secondBg text-firstBg hover:bg-white hover:text-firstBg transition-all duration-500"
+                        className="bg-secondBg text-firstBg hover:bg-white hover:text-firstBg transition-all duration-500 w-full"
                         asChild
                       >
                         <Link
