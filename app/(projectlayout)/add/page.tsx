@@ -169,7 +169,6 @@ const AddProject = async () => {
               name="image"
               type="file"
               placeholder="Book Cover"
-              required
             />
           </div>
           <div className="flex flex-col gap-4">
@@ -222,7 +221,6 @@ const AddProject = async () => {
               name="sourceCode"
               type="url"
               placeholder="Source Code URL"
-              required
             />
           </div>
           <div className="flex flex-col gap-4">
