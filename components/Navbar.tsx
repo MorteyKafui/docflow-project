@@ -1,12 +1,11 @@
-import Link from "next/link";
-import { Button } from "./ui/button";
-import { ModeToggle } from "./ToggleModeButton";
 import {
-  RegisterLink,
   LoginLink,
   LogoutLink,
+  RegisterLink,
 } from "@kinde-oss/kinde-auth-nextjs/components";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import Link from "next/link";
+import { Button } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,10 +15,9 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import SearchForm from "./SearchForm";
-import MobileNav from "./MobileNav";
 import Image from "next/image";
+import MobileNav from "./MobileNav";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const Navbar = async () => {
   const { isAuthenticated, getUser } = getKindeServerSession();
@@ -79,31 +77,39 @@ const Navbar = async () => {
             </div>
           ) : (
             <div className="hidden lg:block">
-              <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <Avatar>
-                    <AvatarImage src={user?.picture as string} />
-                    <AvatarFallback>?</AvatarFallback>
-                  </Avatar>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-firstBg text-secondBg">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>{user?.given_name}</DropdownMenuItem>
-                  <DropdownMenuItem>{user?.family_name}</DropdownMenuItem>
-                  <DropdownMenuItem>{user?.email}</DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      className="w-full bg-red-600 text-white font-semibold"
-                      asChild
-                    >
-                      <LogoutLink>Log out</LogoutLink>
-                    </Button>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <div className="flex items-center gap-4">
+                <Button
+                  className="bg-secondBg text-firstBg hover:text-muted transition-all duration-500 font-bold"
+                  asChild
+                >
+                  <Link href="/add">New Project</Link>
+                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <Avatar>
+                      <AvatarImage src={user?.picture as string} />
+                      <AvatarFallback>?</AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="bg-firstBg text-secondBg">
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>{user?.given_name}</DropdownMenuItem>
+                    <DropdownMenuItem>{user?.family_name}</DropdownMenuItem>
+                    <DropdownMenuItem>{user?.email}</DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="w-full bg-red-600 text-white font-semibold"
+                        asChild
+                      >
+                        <LogoutLink>Log out</LogoutLink>
+                      </Button>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </div>
           )}
 

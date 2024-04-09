@@ -221,11 +221,13 @@ const AllProjects = ({ projects }: ProjectsProp) => {
         <SearchForm />
       </div>
       <div>
-        <div className="grid grid-cols-1  lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1  lg:grid-cols-3 gap-8 h-full">
           {projects.length < 1 ? (
-            <>
-              <p className="text-3xl font-medium">No projects found</p>
-            </>
+            <div className="flex justify-center items-center">
+              <p className="text-3xl font-medium text-rose-500 text-center">
+                No projects found
+              </p>
+            </div>
           ) : (
             projects.map(({ id, title, year, course }) => (
               <Card

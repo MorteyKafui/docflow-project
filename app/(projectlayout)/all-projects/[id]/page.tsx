@@ -1,7 +1,7 @@
 import prisma from "@/utils/db";
+import { unstable_noStore as noStore } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
-import { unstable_noStore as noStore } from "next/cache";
 
 const getSingleProject = async (projectId: string) => {
   noStore();
@@ -14,6 +14,7 @@ const getSingleProject = async (projectId: string) => {
       id: true,
       title: true,
       bookCover: true,
+      pdfPath: true,
       bookTitle: true,
       course: true,
       courseCode: true,
@@ -67,6 +68,21 @@ const ProjectPage = async ({ params }: { params: { id: string } }) => {
           <div className="col-span-2 text-white order-1 lg:order-none">
             <h2 className="text-2xl my-8 font-bold">Documentation</h2>
             <p className="w-4/5">{project?.documentation}</p>
+            {project?.pdfPath ? (
+              <div className="my-8">
+                <a
+                  className="bg-secondBg text-firstBg px-4 py-2 rounded text-lg font-bold hover:opacity-90 transition-all duration-500"
+                  href={`${project?.pdfPath}`}
+                  download={project?.pdfPath}
+                >
+                  Download PDF
+                </a>
+              </div>
+            ) : (
+              <p className="text-rose-500 font-semibold">
+                No PDF documentation uploaded for this project
+              </p>
+            )}
           </div>
           <div className="text-white">
             <h2 className="text-2xl my-8 font-bold">More Details:</h2>

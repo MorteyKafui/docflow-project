@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import prisma from "@/utils/db";
 import supabase from "@/utils/supabse";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+
 import { redirect } from "next/navigation";
 
 const AddProject = async () => {
@@ -19,6 +20,7 @@ const AddProject = async () => {
     const bookTitle = formData.get("bookTitle") as string;
     const courseCode = formData.get("courseCode") as string;
     const image = formData.get("image") as File;
+    const pdfFile = formData.get("pdfFile") as File;
     const members = formData.get("members") as string;
     const supervisor = formData.get("supervisor") as string;
     const documentation = formData.get("documentation") as string;
@@ -34,22 +36,35 @@ const AddProject = async () => {
         upsert: false,
       });
 
-    await prisma.project.create({
-      data: {
-        userId: user?.id as string,
-        title,
-        course,
-        bookTitle,
-        courseCode,
-        members,
-        supervisor,
-        bookCover: imageData?.path as string,
-        documentation,
-        projectUrl,
-        sourceCode,
-        year,
-      },
-    });
+    const { data: pdfData, error: pdfError } = await supabase.storage
+      .from("pdfs")
+      .upload(`${pdfFile.name}-${new Date()}`, pdfFile, {
+        cacheControl: "2592000",
+        contentType: "application/pdf",
+        upsert: false,
+      });
+
+    try {
+      await prisma.project.create({
+        data: {
+          userId: user?.id as string,
+          title,
+          course,
+          bookTitle,
+          courseCode,
+          members,
+          supervisor,
+          bookCover: imageData?.path as string,
+          pdfPath: pdfData?.path as string,
+          documentation,
+          projectUrl,
+          sourceCode,
+          year,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
 
     return redirect("/dashboard");
   };
@@ -170,6 +185,19 @@ const AddProject = async () => {
               id="documentation"
               placeholder="Type your documentation"
               required
+            />
+          </div>
+          <div className="flex flex-col gap-4">
+            <Label className="lg:text-xl flex items-center" htmlFor="pdf">
+              Upload Documentation (pdf)
+            </Label>
+            <Input
+              id="pdf"
+              type="file"
+              // accept=".pdf"
+              name="pdfFile"
+              placeholder="PDF File"
+              className="text-firstBg font-semibold"
             />
           </div>
           <div className="flex flex-col gap-4">

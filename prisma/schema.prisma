@@ -30,6 +30,7 @@ model Project {
   members       String
   supervisor    String
   bookCover     String
+  pdfPath       String?
   documentation String
   projectUrl    String?
   sourceCode    String

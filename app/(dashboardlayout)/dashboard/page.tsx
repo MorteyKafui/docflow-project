@@ -58,7 +58,7 @@ const DashboardPage = async () => {
           </p>
         </div>
         <Button
-          className="my-5 text-firstBg transition-all duration-500 hover:text-white lg:mt-0"
+          className="my-5 text-firstBg transition-all duration-500 hover:text-white lg:mt-0 lg:hidden"
           asChild
         >
           <Link className="font-bold bg-secondBg text-lg" href="/add">
@@ -67,19 +67,22 @@ const DashboardPage = async () => {
         </Button>
       </div>
       {data.length < 1 ? (
-        <div className="flex min-h-[500px] flex-col items-center justify-center rounded-md border border-dashed border-gray-500 p-8 text-center animate-in fade-in-50">
+        <div className="flex min-h-[500px] flex-col items-center justify-center rounded-md border border-dashed border-secondBg p-8 text-center animate-in fade-in-50">
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
-            <File className="w-10 h-10 text-primary" />
+            <File className="w-10 h-10 text-primary text-rose-500" />
           </div>
           <h3 className="mt-6 text-xl font-semibold">
             You don&apos; have any project yet
           </h3>
-          <p className="mb-8 mt-2 text-center text-sm leading-6 text-muted-foreground max-w-sm mx-auto">
+          <p className="mb-8 mt-2 text-center text-sm leading-6 text-muted max-w-sm mx-auto">
             You currently don&apos;t have any project(s). Please create some so
             that you can see them here!
           </p>
           <Button asChild>
-            <Link className="font-medium text-lg" href="/add">
+            <Link
+              className="font-medium text-lg border-2 border-secondBg"
+              href="/add"
+            >
               Create a new Project
             </Link>
           </Button>

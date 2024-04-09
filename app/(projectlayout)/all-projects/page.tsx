@@ -18,7 +18,6 @@ const getProjects = async () => {
 
 const ProjectsPage = async () => {
   const projects = await getProjects();
-  // const projects: any[] = [];
 
   return (
     <>
